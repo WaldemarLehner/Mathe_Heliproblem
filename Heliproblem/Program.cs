@@ -11,12 +11,13 @@ namespace Heliproblem
 {
     class Program
     {
+        public static Config cfg = new Config();
         static void Main(string[] args)
         {
             List<Datapoint> datapoints = new List<Datapoint>();
             
             var points = new Point[] { new Point(), new Point(), new Point() };
-            var cfg = new Config();
+            
             
             if(File.Exists(AppDomain.CurrentDomain.BaseDirectory + "data.cfg"))
             {

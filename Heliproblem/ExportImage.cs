@@ -34,7 +34,7 @@ namespace Heliproblem
         {
             points = _points;
             dataset = _dataset;
-            path = AppDomain.CurrentDomain.BaseDirectory + "img/" + DateTime.UtcNow.ToString("dd-MM-yyyy \\@ hh-mm-ss") + ".png";
+            path = AppDomain.CurrentDomain.BaseDirectory + "img/" + DateTime.UtcNow.ToString("yyyy-MM-dd \\@ hh-mm-ss") + "UTC precision_"+Program.cfg.precision+".png";
 
             GetImgDimensions();
             Generate();
