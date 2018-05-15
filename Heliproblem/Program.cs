@@ -115,8 +115,10 @@ namespace Heliproblem
             void runcalc()
             {
                 double record = double.MaxValue;
+                var hundreth =  (long)(Math.Pow(cfg.precision,points.Length*2)/100)-1;
                 Point[] record_obj = new Point[3];
                 int count = 0;
+                int percentdone = 0;
                 long cumcount = 0;
                 long endcount = (long)Math.Pow(cfg.precision, points.Length * 2);
                 for(points[0].X = 0; points[0].X < cfg.precision; points[0].X++)
@@ -131,18 +133,22 @@ namespace Heliproblem
                                 {
                                     for(points[2].Y = 0; points[2].Y < cfg.precision; points[2].Y++)
                                     {
-                                        count++;
-                                        if(count > 1000000000)
+                                        
+                                        if(count > hundreth)
                                         {
                                             cumcount += count;
                                                 count = 0;
+                                            percentdone++;
+                                            Console.Clear();
+                                            Console.WriteLine(percentdone + "%");
                                         }
                                         double retval = getCalculation();
                                         if(retval < record)
                                         {
                                             record = retval;
-                                            record_obj = points;
+                                            record_obj = convertPointArray(points);
                                         }
+                                        count++;
 
                                     }
                                 }
@@ -158,7 +164,7 @@ namespace Heliproblem
                 foreach(Point p in record_obj)
                 {
                     i++;
-                    Console.WriteLine("P" + i + ".X = " + p.X +"\n P"+i+".Y = " + p.Y +"\n\n");
+                    Console.WriteLine("P" + i + ".X = " + p.X +"\nP"+i+".Y = " + p.Y +"\n\n");
 
                 }
                 Console.ReadKey();
@@ -195,13 +201,26 @@ namespace Heliproblem
                 var deltaX = (cfg.MinX + (x1 / cfg.precision) * (cfg.MaxX - cfg.MinX)) - (cfg.MinX + (x2 / cfg.precision) * (cfg.MaxX - cfg.MinX));
                 var deltaY = (cfg.MinY + (y1 / cfg.precision) * (cfg.MaxY - cfg.MinY)) - (cfg.MinY + (y2 / cfg.precision) * (cfg.MaxY - cfg.MinY));
 
-                return Math.Sqrt(deltaX * deltaX + deltaY * deltaY);
+                return Math.Sqrt(deltaX * deltaX + deltaY * deltaY);//
             }
             Point convertPoint(Point p)
             {
                 var x = (cfg.MinX + (p.X / cfg.precision) * (cfg.MaxX - cfg.MinX));
                 var y = (cfg.MinY + (p.Y / cfg.precision) * (cfg.MaxY - cfg.MinY));
                 return new Point(x, y);
+            }
+            Point[] convertPointArray(Point[] p_arr)
+            {
+                var count = 0;
+                Point[] returnpoints = new Point[p_arr.Length];
+                foreach(Point p in p_arr)
+                {
+                    var x = (cfg.MinX + (p.X / cfg.precision) * (cfg.MaxX - cfg.MinX));
+                    var y = (cfg.MinY + (p.Y / cfg.precision) * (cfg.MaxY - cfg.MinY));
+                    returnpoints[count] = new Point(x, y);
+                    count++;
+                }
+                return returnpoints;
             }
 
             
