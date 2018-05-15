@@ -14,6 +14,7 @@ namespace Heliproblem
         static void Main(string[] args)
         {
             List<Datapoint> datapoints = new List<Datapoint>();
+            
             var points = new Point[] { new Point(), new Point(), new Point() };
             var cfg = new Config();
             
@@ -85,9 +86,9 @@ namespace Heliproblem
                     Console.ReadKey();
                     Console.Clear();
                     runcalc();
-                    
-                    
 
+
+                    
                     Console.ReadKey();
                 }
                
@@ -167,6 +168,8 @@ namespace Heliproblem
                     Console.WriteLine("P" + i + ".X = " + p.X +"\nP"+i+".Y = " + p.Y +"\n\n");
 
                 }
+
+                var exportimg = new ExportImage(record_obj, datapoints.ToArray());
                 Console.ReadKey();
 
             }
@@ -191,15 +194,19 @@ namespace Heliproblem
             }
             double getDistP(Point p1,float x2,float y2)
             {
-                var deltaX = (cfg.MinX + (p1.X / cfg.precision) * (cfg.MaxX - cfg.MinX)) - (cfg.MinX + (x2 / cfg.precision) * (cfg.MaxX - cfg.MinX));
-                var deltaY = (cfg.MinY + (p1.Y / cfg.precision) * (cfg.MaxY - cfg.MinY)) - (cfg.MinY + (y2 / cfg.precision) * (cfg.MaxY - cfg.MinY));
+                // var deltaX = (cfg.MinX + (p1.X / cfg.precision) * (cfg.MaxX - cfg.MinX)) - (cfg.MinX + (x2 / cfg.precision) * (cfg.MaxX - cfg.MinX));
+                // var deltaY = (cfg.MinY + (p1.Y / cfg.precision) * (cfg.MaxY - cfg.MinY)) - (cfg.MinY + (y2 / cfg.precision) * (cfg.MaxY - cfg.MinY));
+                var deltaX = (cfg.MinX + (p1.X / cfg.precision) * (cfg.MaxX - cfg.MinX)) - x2;
+                var deltaY = (cfg.MinY + (p1.Y / cfg.precision) * (cfg.MaxY - cfg.MinY)) - y2;
 
                 return Math.Sqrt(deltaX*deltaX+deltaY*deltaY);
             }
             double getDist(float x1,float y1,float x2,float y2)
             {
-                var deltaX = (cfg.MinX + (x1 / cfg.precision) * (cfg.MaxX - cfg.MinX)) - (cfg.MinX + (x2 / cfg.precision) * (cfg.MaxX - cfg.MinX));
-                var deltaY = (cfg.MinY + (y1 / cfg.precision) * (cfg.MaxY - cfg.MinY)) - (cfg.MinY + (y2 / cfg.precision) * (cfg.MaxY - cfg.MinY));
+                //var deltaX = (cfg.MinX + (x1 / cfg.precision) * (cfg.MaxX - cfg.MinX)) - (cfg.MinX + (x2 / cfg.precision) * (cfg.MaxX - cfg.MinX));
+                //var deltaY = (cfg.MinY + (y1 / cfg.precision) * (cfg.MaxY - cfg.MinY)) - (cfg.MinY + (y2 / cfg.precision) * (cfg.MaxY - cfg.MinY));
+                var deltaX = (cfg.MinX + (x1 / cfg.precision) * (cfg.MaxX - cfg.MinX)) - x2;
+                var deltaY = (cfg.MinY + (y1 / cfg.precision) * (cfg.MaxY - cfg.MinY)) - y2;
 
                 return Math.Sqrt(deltaX * deltaX + deltaY * deltaY);//
             }
@@ -222,6 +229,7 @@ namespace Heliproblem
                 }
                 return returnpoints;
             }
+            
 
             
 

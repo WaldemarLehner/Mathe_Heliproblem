@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Drawing;
 using System.Threading.Tasks;
 
 namespace Heliproblem
@@ -18,6 +19,15 @@ namespace Heliproblem
             PosX = _x;
             PosY = _y;
             Weight = _weight;
+        }
+        public PointF ReturnPointF()
+        {
+            PointF retobj = new PointF
+            {
+                X = PosX,
+                Y = PosY
+            };
+            return retobj;
         }
 
 
