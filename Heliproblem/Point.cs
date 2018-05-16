@@ -9,9 +9,9 @@ namespace Heliproblem
 {
     public class Point
     {
-        public float X { get; set; }
-        public float Y { get; set; }
-        public Point(float _X,float _Y)
+        public double X { get; set; }
+        public double Y { get; set; }
+        public Point(double _X,double _Y)
         {
             X = _X;
             Y = _Y;
@@ -26,8 +26,8 @@ namespace Heliproblem
         {
             PointF retobj = new PointF
             {
-                X = X,
-                Y = Y
+                X = (float)X,
+                Y = (float)Y
             };
             return retobj;
         }

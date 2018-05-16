@@ -15,7 +15,9 @@ namespace Heliproblem
         static void Main(string[] args)
         {
             List<Datapoint> datapoints = new List<Datapoint>();
-            
+//#if DEBUG
+            var timer = System.Diagnostics.Stopwatch.StartNew();
+//#endif
             var points = new Point[] { new Point(), new Point(), new Point() };
             
             
@@ -117,12 +119,12 @@ namespace Heliproblem
             void runcalc()
             {
                 double record = double.MaxValue;
-                var hundreth =  (long)(Math.Pow(cfg.precision,points.Length*2)/100)-1;
+                var hundreth =  (Math.Pow(cfg.precision,points.Length*2)/100)-1;
                 Point[] record_obj = new Point[3];
                 int count = 0;
                 int percentdone = 0;
                 long cumcount = 0;
-                long endcount = (long)Math.Pow(cfg.precision, points.Length * 2);
+                double endcount = Math.Pow(cfg.precision, points.Length * 2);
                 for(points[0].X = 0; points[0].X < cfg.precision; points[0].X++)
                 {
                     for(points[0].Y = 0; points[0].Y < cfg.precision; points[0].Y++)
@@ -141,7 +143,7 @@ namespace Heliproblem
                                             cumcount += count;
                                                 count = 0;
                                             percentdone++;
-                                            Console.Clear();
+                                            
                                             Console.WriteLine(percentdone + "%");
                                         }
                                         double retval = getCalculation();
@@ -169,9 +171,13 @@ namespace Heliproblem
                     Console.WriteLine("P" + i + ".X = " + p.X +"\nP"+i+".Y = " + p.Y +"\n\n");
 
                 }
-
+//#if DEBUG
+                timer.Stop();
+                Console.WriteLine(timer.ElapsedMilliseconds + "ms (kumulativ)");
+                Console.WriteLine(timer.ElapsedMilliseconds / Math.Pow(cfg.precision, points.Length * 2)+"ms pro Operation (durchschnitt)");
+//#endif
                 var exportimg = new ExportImage(record_obj, datapoints.ToArray());
-                Console.ReadKey();
+                
 
             }
             double getCalculation()
